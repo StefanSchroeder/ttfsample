@@ -31,7 +31,9 @@ var ttf_name_fields = map[int]string{
     4: "Full name of the font",
     5: "Version of the name table",
 }
-var title = "Jabberwocky"
+var title = "Default Title"
+
+const imgW, imgH = 1640, 800
 
 var jabber = []string{
 	"abcdefghijklmnopqrstuvwxyz",
@@ -39,9 +41,8 @@ var jabber = []string{
 	"!?%&1234567890üöäÜÖÄßéèáà@",
 }
 
-var bArial, _ = ioutil.ReadFile("FreeSansBold.ttf")
-
 var (
+    boringfont = flag.String("boringfont", "FreeSansBold.ttf", "The path to the boring font")
     verbose  = flag.Bool("verbose", false, "Print more info")
     dpi      = flag.Float64("dpi", 72, "screen resolution in Dots Per Inch")
     fontfile = flag.String("fontfile", "../fnts/usr/share/fonts/truetype/hack/Hack-Bold.ttf", "filename of the ttf font")
@@ -66,6 +67,12 @@ func main() {
 
 func Printjabber(ffile string) {
 
+    var bBoringFont, boring_error = ioutil.ReadFile(*boringfont)
+    if boring_error != nil {
+		log.Println(boring_error)
+        panic("Could not load boring font.")
+    }
+
 	fontBytes, err := ioutil.ReadFile(ffile)
     basename := filepath.Base(ffile)
     log.Println("Reading \"" + basename + "\"")
@@ -78,7 +85,7 @@ func Printjabber(ffile string) {
 		log.Println(err)
 		return
 	}
-    fArial, err := truetype.Parse(bArial)
+    fBoringFont, err := truetype.Parse(bBoringFont)
 
     fontname := f.Name(truetype.NameID(1))
     fontnam2 := f.Name(truetype.NameID(2))
@@ -90,7 +97,6 @@ func Printjabber(ffile string) {
 	// Draw the background and the guidelines.
 	fg, bg := image.Black, image.White
 	ruler := color.RGBA{0xdd, 0xdd, 0xdd, 0xff}
-	const imgW, imgH = 1640, 800
 
 	rgba := image.NewRGBA(image.Rect(0, 0, imgW, imgH))
 	draw.Draw(rgba, rgba.Bounds(), bg, image.ZP, draw.Src)
@@ -148,7 +154,7 @@ func Printjabber(ffile string) {
 	d2 := &font.Drawer{
 		Dst: rgba,
 		Src: fg,
-		Face: truetype.NewFace(fArial, &truetype.Options{
+		Face: truetype.NewFace(fBoringFont, &truetype.Options{
 			Size:    *size * resize,
 			DPI:     *dpi,
 			Hinting: h,

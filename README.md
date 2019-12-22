@@ -17,6 +17,10 @@ Usage:
 
 This will create a file "FreeSansBold.ttf.png" in the png/ directory which must exist.
 
+The name of the font will always be included printed with a boring 
+font, by default GNU FreeSansBold, but changable, that is always 
+readable, even if the font has only symbols.
+
 Have a look at the Makefile for more examples.
 
 Author: Stefan Schröder, 2019
