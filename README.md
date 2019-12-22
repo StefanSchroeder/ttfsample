@@ -15,6 +15,10 @@ Usage:
 
     go run ttfsample.go -fontfile FreeSansBold.ttf
 
+When run with the font CABALETT, the result will look like this:
+
+![Logo](https://github.com/StefanSchroeder/Gocal/blob/master/ttfsample/sample/CABALETT.TTF.png?raw=true)
+
 This will create a file "FreeSansBold.ttf.png" in the png/ directory which must exist.
 
 The name of the font will always be included printed with a boring 
