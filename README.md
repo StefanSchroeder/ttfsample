@@ -17,7 +17,7 @@ Usage:
 
 When run with the font CABALETT, the result will look like this:
 
-![Logo](https://github.com/StefanSchroeder/Gocal/blob/master/ttfsample/sample/CABALETT.TTF.png?raw=true)
+![Logo](https://github.com/StefanSchroeder/ttfsample/blob/master/ttfsample/sample/CABALETT.TTF.png?raw=true)
 
 This will create a file "FreeSansBold.ttf.png" in the png/ directory which must exist.
 
