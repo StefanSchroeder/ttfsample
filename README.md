@@ -15,11 +15,11 @@ Usage:
 
     go run ttfsample.go -fontfile FreeSansBold.ttf
 
-When run with the font CABALETT, the result will look like this:
+When run with the font Arial Narrow, the result will look like this:
 
-![Sample](https://raw.githubusercontent.com/StefanSchroeder/ttfsample/master/sample/CABALETT.TTF.png)
+![Sample](https://raw.githubusercontent.com/StefanSchroeder/ttfsample/master/sample/sample.png)
 
-This will create a file "FreeSansBold.ttf.png" in the png/ directory which must exist.
+This will create an image file in the png/ directory which must exist.
 
 The name of the font will always be included printed with a boring 
 font, by default GNU FreeSansBold, but changable, that is always 
