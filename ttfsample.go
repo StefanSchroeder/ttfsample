@@ -1,7 +1,9 @@
-/* Take a TTF file as an argument and write a PNG image
-   that conains a sample of that font.
+/*Take a TTF font file as an argument and write a PNG image
+  that contains a sample of that font.
 
-   Written by Stefan Schröder. 2019 */
+   * Use of this source code is governed by a BSD-style
+   * license that can be found in the LICENSE file
+  Written by Stefan Schröder. 2019 */
 package main
 
 import (
@@ -23,7 +25,7 @@ import (
 )
 
 // https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6name.html
-var ttf_name_fields = map[int]string{
+var ttfNameFields = map[int]string{
 	0: "Copyright notice",
 	1: "Font Family",
 	2: "Font Subfamily",
@@ -53,6 +55,7 @@ var (
 	text       = string("ABab1")
 )
 
+// Info is a wrapper around print to control verbosity.
 func Info(format string, args ...interface{}) {
 	if *verbose {
 		msg := fmt.Sprintf(format, args...)
@@ -65,14 +68,8 @@ func main() {
 	Printjabber(*fontfile)
 }
 
+// Printjabber does all the work.
 func Printjabber(ffile string) {
-
-	/*var bBoringFont, boring_error = ioutil.ReadFile(*boringfont)
-	if boring_error != nil {
-		log.Println(boring_error)
-		panic("Could not load boring font.")
-	}*/
-	var bBoringFont = getFreeSansBold()
 
 	fontBytes, err := ioutil.ReadFile(ffile)
 	basename := filepath.Base(ffile)
@@ -86,13 +83,17 @@ func Printjabber(ffile string) {
 		log.Println(err)
 		return
 	}
-	fBoringFont, err := truetype.Parse(bBoringFont)
+	fBoringFont, err := truetype.Parse(getFreeSansBold())
+	if err != nil {
+		log.Println(err)
+		return
+	}
 
 	fontname := f.Name(truetype.NameID(1))
 	fontnam2 := f.Name(truetype.NameID(2))
 	title = fontname + "/" + fontnam2
 	for i := 0; i < 5; i++ {
-		fmt.Printf("    %v: <%v>\n", ttf_name_fields[i], f.Name(truetype.NameID(i)))
+		fmt.Printf("    %v: <%v>\n", ttfNameFields[i], f.Name(truetype.NameID(i)))
 	}
 
 	// Draw the background and the guidelines.
@@ -169,15 +170,15 @@ func Printjabber(ffile string) {
 	d2.DrawString(title)
 
 	// Write file
-	output_name := *outdir + "/" + basename + ".png"
-	outFile, err := os.Create(output_name)
+	outputName := *outdir + "/" + basename + ".png"
+	outFile, err := os.Create(outputName)
 	if err != nil {
 		log.Println(err)
 		return
 	}
 	defer outFile.Close()
 	b := bufio.NewWriter(outFile)
-	log.Printf("Written to \"" + output_name + "\"")
+	log.Printf("Written to \"" + outputName + "\"")
 	err = png.Encode(b, rgba)
 	if err != nil {
 		log.Println(err)
