@@ -1,3 +1,8 @@
+[![GoDoc](https://godoc.org/github.com/StefanSchroeder/ttfsample?status.png)](https://godoc.org/github.com/StefanSchroeder/ttfsample)
+[![Build Status](https://travis-ci.org/StefanSchroeder/ttfsample.svg?branch=master)](https://travis-ci.org/StefanSchroeder/ttfsample)
+[![Go Report Card](http://goreportcard.com/badge/StefanSchroeder/ttfsample)](http://goreportcard.com/report/StefanSchroeder/ttfsample)
+ [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # ttfsample
 Creates a sample image of a Truetype font
 
