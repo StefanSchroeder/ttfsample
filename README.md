@@ -18,7 +18,9 @@ https://www.gnu.org/software/freefont/license.html
 
 Usage:
 
-    go run ttfsample.go -fontfile FreeSansBold.ttf
+    go run *.go -fontfile <path-to-your-ttf-font>
+    ./ttfsample.exe -fontfile <path-to-your-ttf-font> (Windows)
+    ./ttfsample -fontfile <path-to-your-ttf-font> (Linux)
 
 When run with the font Arial Narrow, the result will look like this:
 
@@ -36,7 +38,7 @@ Author: Stefan Schröder, 2019
 
 # Build
 
-    go build ttfsample.go 
+    go build *.go 
 
 will do the trick if your Go development environment is setup properly.
 
