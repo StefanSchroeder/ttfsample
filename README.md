@@ -22,6 +22,9 @@ Usage:
     ./ttfsample.exe -fontfile <path-to-your-ttf-font> (Windows)
     ./ttfsample -fontfile <path-to-your-ttf-font> (Linux)
 
+There are a couple of options, primary being, that you can supply the text to be
+printed as an argument. But there is also a sensible default (see image).
+
 When run with the font Arial Narrow, the result will look like this:
 
 ![Sample](https://raw.githubusercontent.com/StefanSchroeder/ttfsample/master/sample/sample.png)

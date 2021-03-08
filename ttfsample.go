@@ -37,7 +37,7 @@ var title = "Default Title"
 
 const imgW, imgH = 1640, 800
 
-var jabber = []string{
+var defaultJabberText = []string{
 	"abcdefghijklmnopqrstuvwxyz",
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 	"!?%&1234567890üöäÜÖÄßéèáà@",
@@ -65,11 +65,15 @@ func Info(format string, args ...interface{}) {
 
 func main() {
 	flag.Parse()
-	Printjabber(*fontfile)
+	if flag.NArg() == 0 {
+		Printjabber(*fontfile, defaultJabberText)
+	} else {
+		Printjabber(*fontfile, flag.Args())
+	}
 }
 
 // Printjabber does all the work.
-func Printjabber(ffile string) {
+func Printjabber(ffile string, textToJabber []string) {
 
 	fontBytes, err := ioutil.ReadFile(ffile)
 	basename := filepath.Base(ffile)
@@ -146,7 +150,7 @@ func Printjabber(ffile string) {
 	}
 	d.DrawString(title)
 	y += dy
-	for _, s := range jabber {
+	for _, s := range textToJabber {
 		d.Dot = fixed.P(10, y)
 		d.DrawString(s)
 		y += dy
