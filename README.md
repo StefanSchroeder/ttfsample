@@ -50,4 +50,10 @@ Tested on Windows and Linux.
 
 
 
+# TODO
+
+OK Create output dir if missing.
+OK Do not look for Hack-font.
+OK Embed TTF properly.
+Support OTF.
 

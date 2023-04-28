@@ -1,13 +1,17 @@
-/*Take a TTF font file as an argument and write a PNG image
-  that contains a sample of that font.
+/*
+Take a TTF font file as an argument and write a PNG image
 
-   * Use of this source code is governed by a BSD-style
-   * license that can be found in the LICENSE file
-  Written by Stefan Schröder. 2019 */
+	that contains a sample of that font.
+
+	 * Use of this source code is governed by a BSD-style
+	 * license that can be found in the LICENSE file
+	Written by Stefan Schröder. 2019
+*/
 package main
 
 import (
 	"bufio"
+	_ "embed"
 	"flag"
 	"fmt"
 	"github.com/golang/freetype/truetype"
@@ -43,11 +47,14 @@ var defaultJabberText = []string{
 	"!?%&1234567890üöäÜÖÄßéèáà@",
 }
 
+//go:embed fonts/FreeSansBold.ttf
+var freesansbold []byte
+
 var (
 	boringfont = flag.String("boringfont", "FreeSansBold.ttf", "The path to the boring font")
 	verbose    = flag.Bool("verbose", false, "Print more info")
 	dpi        = flag.Float64("dpi", 72, "screen resolution in Dots Per Inch")
-	fontfile   = flag.String("fontfile", "../fnts/usr/share/fonts/truetype/hack/Hack-Bold.ttf", "filename of the ttf font")
+	fontfile   = flag.String("fontfile", "", "filename of the ttf font")
 	hinting    = flag.String("hinting", "none", "none | full")
 	outdir     = flag.String("outdir", "png", "Output directory")
 	size       = flag.Float64("size", 100, "font size in points")
@@ -65,6 +72,10 @@ func Info(format string, args ...interface{}) {
 
 func main() {
 	flag.Parse()
+	if _, err := os.Stat(*fontfile); err != nil {
+		fmt.Printf("Font does not exist\n")
+		return
+	}
 	if flag.NArg() == 0 {
 		Printjabber(*fontfile, defaultJabberText)
 	} else {
@@ -87,7 +98,8 @@ func Printjabber(ffile string, textToJabber []string) {
 		log.Println(err)
 		return
 	}
-	fBoringFont, err := truetype.Parse(getFreeSansBold())
+	//fBoringFont, err := truetype.Parse(getFreeSansBold())
+	fBoringFont, err := truetype.Parse(freesansbold)
 	if err != nil {
 		log.Println(err)
 		return
@@ -173,6 +185,11 @@ func Printjabber(ffile string, textToJabber []string) {
 	}
 	d2.DrawString(title)
 
+	// Create output folder if missing.
+	err = os.MkdirAll(*outdir, os.ModePerm)
+	if err != nil {
+		log.Println(err)
+	}
 	// Write file
 	outputName := *outdir + "/" + basename + ".png"
 	outFile, err := os.Create(outputName)
