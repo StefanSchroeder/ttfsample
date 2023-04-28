@@ -1,10 +1,8 @@
 /*
-Take a TTF font file as an argument and write a PNG image
-
+	Take a TTF font file as an argument and write a PNG image
 	that contains a sample of that font.
 
-	 * Use of this source code is governed by a BSD-style
-	 * license that can be found in the LICENSE file
+	 * The license that can be found in the LICENSE file
 	Written by Stefan Schröder. 2019
 */
 package main
@@ -59,7 +57,7 @@ var (
 	outdir     = flag.String("outdir", "png", "Output directory")
 	size       = flag.Float64("size", 100, "font size in points")
 	spacing    = flag.Float64("spacing", 1.5, "line spacing (e.g. 2 means double spaced)")
-	text       = string("ABab1")
+	//text       = string("ABab1")
 )
 
 // Info is a wrapper around print to control verbosity.

@@ -1,6 +1,5 @@
 [![GoDoc](https://godoc.org/github.com/StefanSchroeder/ttfsample?status.png)](https://godoc.org/github.com/StefanSchroeder/ttfsample)
-[![Build Status](https://travis-ci.org/StefanSchroeder/ttfsample.svg?branch=master)](https://travis-ci.org/StefanSchroeder/ttfsample)
-[![Go Report Card](http://goreportcard.com/badge/StefanSchroeder/ttfsample)](http://goreportcard.com/report/StefanSchroeder/ttfsample)
+[![Go Report Card](https://goreportcard.com/badge/github.com/StefanSchroeder/ttfsample)](https://goreportcard.com/report/github.com/StefanSchroeder/ttfsample)
  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # ttfsample
@@ -35,13 +34,15 @@ The name of the font will always be included printed with a boring
 font, by default GNU FreeSansBold, but changable, that is always 
 readable, even if the font has only symbols.
 
-Have a look at the Makefile for more examples.
-
 Author: Stefan Schröder, 2019
+
+# Install
+
+	go install github.com/StefanSchroeder/ttfsample/ttfsample@latest
 
 # Build
 
-    go build *.go 
+	go build *.go 
 
 will do the trick if your Go development environment is setup properly.
 
