@@ -28,11 +28,12 @@ When run with the font Arial Narrow, the result will look like this:
 
 ![Sample](https://raw.githubusercontent.com/StefanSchroeder/ttfsample/master/sample/sample.png)
 
-This will create an image file in the png/ directory which must exist.
+This will create an image file in the png/ directory which will 
+created if it does not exist.
 
-The name of the font will always be included printed with a boring 
-font, by default GNU FreeSansBold, but changable, that is always 
-readable, even if the font has only symbols.
+The name of the font will always be included printed with a
+boring font, by default GNU FreeSansBold, that is always
+readable even if the font has only symbols.
 
 Author: Stefan Schröder, 2019
 
@@ -48,13 +49,10 @@ will do the trick if your Go development environment is setup properly.
 
 Tested on Windows and Linux.
 
-
-
-
 # TODO
 
-OK Create output dir if missing.
-OK Do not look for Hack-font.
-OK Embed TTF properly.
-Support OTF.
+- OK Create output dir if missing.
+- OK Do not look for Hack-font.
+- OK Embed TTF properly.
+- Support OTF.
 
