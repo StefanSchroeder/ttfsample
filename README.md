@@ -3,14 +3,14 @@
  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # ttfsample
-Creates a sample image of a Truetype font
+Creates a sample image of a Truetype TTF font or Opentype OTF font.
 
-ttfsample will take a TTF-file as an input and create a PNG-image 
+ttfsample will take a font file as an input and create a PNG-image 
 with a sample of the font. 
 
 For the License see LICENSE.
 
-The program comes with a GNU Free Sans Bold True Type font which 
+The program comes with a GNU Free Sans and Serif Bold True Type font which 
 is under GNU Free Font license.
 
 https://www.gnu.org/software/freefont/license.html
@@ -29,13 +29,13 @@ When run with the font Arial Narrow, the result will look like this:
 ![Sample](https://raw.githubusercontent.com/StefanSchroeder/ttfsample/master/sample/sample.png)
 
 This will create an image file in the png/ directory which will 
-created if it does not exist.
+be created if it does not exist.
 
 The name of the font will always be included printed with a
 boring font, by default GNU FreeSansBold, that is always
 readable even if the font has only symbols.
 
-Author: Stefan Schröder, 2019
+Author: Stefan Schröder, 2019, 2023
 
 # Install
 
@@ -48,11 +48,4 @@ Author: Stefan Schröder, 2019
 will do the trick if your Go development environment is setup properly.
 
 Tested on Windows and Linux.
-
-# TODO
-
-- OK Create output dir if missing.
-- OK Do not look for Hack-font.
-- OK Embed TTF properly.
-- Support OTF.
 
