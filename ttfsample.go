@@ -1,19 +1,23 @@
 /*
-	Take a TTF font file as an argument and write a PNG image
-	that contains a sample of that font.
+Take a TTF or OTF font file and write a PNG image
+that contains a sample of that font.
 
-	 * The license that can be found in the LICENSE file
-	Written by Stefan Schröder. 2019
+The license that can be found in the LICENSE file
+
+Written by Stefan Schröder. 2019, 2023
 */
 package main
 
 import (
+	"golang.org/x/image/font/opentype"
+
 	"bufio"
 	_ "embed"
 	"flag"
 	"fmt"
 	"github.com/golang/freetype/truetype"
 	"golang.org/x/image/font"
+	"golang.org/x/image/font/sfnt"
 	"golang.org/x/image/math/fixed"
 	"image"
 	"image/color"
@@ -26,18 +30,41 @@ import (
 	"path/filepath"
 )
 
-// https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6name.html
-var ttfNameFields = map[int]string{
-	0: "Copyright notice",
-	1: "Font Family",
-	2: "Font Subfamily",
-	3: "Unique Subfamily identification",
-	4: "Full name of the font",
-	5: "Version of the name table",
-}
-var title = "Default Title"
+const (
+	imgW = 2000
+	imgH = 800
+)
 
-const imgW, imgH = 1640, 800
+// https://www.microsoft.com/typography/otspec/name.htm
+var otfNameFields = map[int]string{
+	0:  "Copyright",
+	1:  "Family",
+	2:  "Subfamily",
+	3:  "UniqueIdentifier",
+	4:  "Full",
+	5:  "Version",
+	6:  "PostScript",
+	7:  "Trademark",
+	8:  "Manufacturer",
+	9:  "Designer",
+	10: "Description",
+	11: "VendorURL",
+	12: "DesignerURL",
+	13: "License",
+	14: "LicenseURL",
+	16: "TypographicFamily",
+	17: "TypographicSubfamily",
+	18: "CompatibleFull",
+	19: "SampleText",
+	20: "PostScriptCID",
+	21: "WWSFamily",
+	22: "WWSSubfamily",
+	23: "LightBackgroundPalette",
+	24: "DarkBackgroundPalette",
+	25: "VariationsPostScriptPrefix",
+}
+
+var title = "Default Title"
 
 var defaultJabberText = []string{
 	"abcdefghijklmnopqrstuvwxyz",
@@ -52,26 +79,17 @@ var (
 	boringfont = flag.String("boringfont", "FreeSansBold.ttf", "The path to the boring font")
 	verbose    = flag.Bool("verbose", false, "Print more info")
 	dpi        = flag.Float64("dpi", 72, "screen resolution in Dots Per Inch")
-	fontfile   = flag.String("fontfile", "", "filename of the ttf font")
+	fontfile   = flag.String("fontfile", "", "filename of the ttf/otf font")
 	hinting    = flag.String("hinting", "none", "none | full")
 	outdir     = flag.String("outdir", "png", "Output directory")
 	size       = flag.Float64("size", 100, "font size in points")
 	spacing    = flag.Float64("spacing", 1.5, "line spacing (e.g. 2 means double spaced)")
-	//text       = string("ABab1")
 )
-
-// Info is a wrapper around print to control verbosity.
-func Info(format string, args ...interface{}) {
-	if *verbose {
-		msg := fmt.Sprintf(format, args...)
-		fmt.Print(msg)
-	}
-}
 
 func main() {
 	flag.Parse()
 	if _, err := os.Stat(*fontfile); err != nil {
-		fmt.Printf("Font does not exist\n")
+		log.Printf("Missing file.\n")
 		return
 	}
 	if flag.NArg() == 0 {
@@ -81,115 +99,7 @@ func main() {
 	}
 }
 
-// Printjabber does all the work.
-func Printjabber(ffile string, textToJabber []string) {
-
-	fontBytes, err := ioutil.ReadFile(ffile)
-	basename := filepath.Base(ffile)
-	log.Println("Reading \"" + basename + "\"")
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	f, err := truetype.Parse(fontBytes)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	//fBoringFont, err := truetype.Parse(getFreeSansBold())
-	fBoringFont, err := truetype.Parse(freesansbold)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-
-	fontname := f.Name(truetype.NameID(1))
-	fontnam2 := f.Name(truetype.NameID(2))
-	title = fontname + "/" + fontnam2
-	for i := 0; i < 5; i++ {
-		fmt.Printf("    %v: <%v>\n", ttfNameFields[i], f.Name(truetype.NameID(i)))
-	}
-
-	// Draw the background and the guidelines.
-	fg, bg := image.Black, image.White
-	ruler := color.RGBA{0xdd, 0xdd, 0xdd, 0xff}
-
-	rgba := image.NewRGBA(image.Rect(0, 0, imgW, imgH))
-	draw.Draw(rgba, rgba.Bounds(), bg, image.ZP, draw.Src)
-	for i := 0; i < 200; i++ {
-		rgba.Set(10, 10+i, ruler)
-		rgba.Set(10+i, 10, ruler)
-	}
-
-	// Draw the text.
-	h := font.HintingNone
-	switch *hinting {
-	case "full":
-		h = font.HintingFull
-	}
-	resize := 1.0
-	d := &font.Drawer{
-		Dst: rgba,
-		Src: fg,
-		Face: truetype.NewFace(f, &truetype.Options{
-			Size:    *size,
-			DPI:     *dpi,
-			Hinting: h,
-		}),
-	}
-
-	lx := float64((d.MeasureString(title).Round()))
-	if lx > 1640 { // The font+text is too wide. Resize!
-		resize = 1640.0 / lx
-		d = &font.Drawer{
-			Dst: rgba,
-			Src: fg,
-			Face: truetype.NewFace(f, &truetype.Options{
-				Size:    *size * resize,
-				DPI:     *dpi,
-				Hinting: h,
-			}),
-		}
-	}
-	y := 10 + int(math.Ceil(*size**dpi/72))
-	dy := int(math.Ceil(*size * *spacing * *dpi / 72))
-	y += dy
-	d.Dot = fixed.Point26_6{
-		X: (fixed.I(imgW) - d.MeasureString(title)) / 2,
-		Y: fixed.I(y),
-	}
-	d.DrawString(title)
-	y += dy
-	for _, s := range textToJabber {
-		d.Dot = fixed.P(10, y)
-		d.DrawString(s)
-		y += dy
-	}
-
-	// Draw the title in the standard name
-	d2 := &font.Drawer{
-		Dst: rgba,
-		Src: fg,
-		Face: truetype.NewFace(fBoringFont, &truetype.Options{
-			Size:    *size * resize,
-			DPI:     *dpi,
-			Hinting: h,
-		}),
-	}
-	y = 10 + int(math.Ceil(*size**dpi/72))
-	d2.Dot = fixed.Point26_6{
-		X: 100,
-		Y: fixed.I(y),
-	}
-	d2.DrawString(title)
-
-	// Create output folder if missing.
-	err = os.MkdirAll(*outdir, os.ModePerm)
-	if err != nil {
-		log.Println(err)
-	}
-	// Write file
-	outputName := *outdir + "/" + basename + ".png"
+func Writefile(outputName string, i *image.RGBA) {
 	outFile, err := os.Create(outputName)
 	if err != nil {
 		log.Println(err)
@@ -198,7 +108,7 @@ func Printjabber(ffile string, textToJabber []string) {
 	defer outFile.Close()
 	b := bufio.NewWriter(outFile)
 	log.Printf("Written to \"" + outputName + "\"")
-	err = png.Encode(b, rgba)
+	err = png.Encode(b, i)
 	if err != nil {
 		log.Println(err)
 		return
@@ -208,4 +118,121 @@ func Printjabber(ffile string, textToJabber []string) {
 		log.Println(err)
 		return
 	}
+}
+
+func Printjabber(ffile string, textToJabber []string) {
+	// Draw the background and the guidelines.
+	fg := image.Black
+	ruler := color.RGBA{0xdd, 0xdd, 0xdd, 0xff}
+
+	rgba := image.NewRGBA(image.Rect(0, 0, imgW, imgH))
+	draw.Draw(rgba, rgba.Bounds(), image.White, image.ZP, draw.Src)
+	for i := 0; i < 200; i++ {
+		rgba.Set(10, 10+i, ruler)
+		rgba.Set(10+i, 10, ruler)
+	}
+
+	// Hinting
+	h := font.HintingNone
+	switch *hinting {
+	case "full":
+		h = font.HintingFull
+	}
+
+	// Fetch the font
+	fontBytes, err := ioutil.ReadFile(ffile)
+	basename := filepath.Base(ffile)
+	log.Println("Reading \"" + basename + "\"")
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	fontsize := *size
+
+	fontObject, err := opentype.Parse(fontBytes)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	var b sfnt.Buffer
+	fullfontname, _ := fontObject.Name(&b, 4)
+	title = fullfontname
+
+	// Print the meta-data
+	for i := 0; i < 20; i++ {
+		j, _ := fontObject.Name(&b, sfnt.NameID(i))
+		fmt.Printf("    %v: <%v>\n", otfNameFields[i], j)
+	}
+
+	fontface, _ := opentype.NewFace(fontObject, &opentype.FaceOptions{
+		Size:    fontsize,
+		DPI:     *dpi,
+		Hinting: h,
+	})
+
+	d := font.Drawer{
+		Dst:  rgba,
+		Src:  fg,
+		Face: fontface,
+	}
+
+	// We could use d.MeasureString to get the width,
+	// but it's not worth it.
+
+	y := 10 + int(math.Ceil(fontsize**dpi/72))
+	dy := int(math.Ceil(fontsize * *spacing * *dpi / 72))
+	y += dy
+	d.Dot = fixed.Point26_6{
+		X: (fixed.I(imgW) - d.MeasureString(title)) / 2,
+		Y: fixed.I(y),
+	}
+
+	// Draw name of font using that font
+	d.DrawString(title)
+	y += dy
+	for _, s := range textToJabber {
+		d.Dot = fixed.P(10, y)
+		d.DrawString(s)
+		y += dy
+	}
+
+	// ************************************
+	// Print the header in the boring font
+	// ************************************
+
+	fBoringFont, err := truetype.Parse(freesansbold)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	boring_face := truetype.NewFace(fBoringFont, &truetype.Options{
+		Size:    fontsize,
+		DPI:     *dpi,
+		Hinting: h,
+	})
+
+	// Draw the title in the boring font
+	drawer_boring := &font.Drawer{
+		Dst:  rgba,
+		Src:  fg,
+		Face: boring_face,
+	}
+
+	y = 10 + int(math.Ceil(fontsize**dpi/72))
+	drawer_boring.Dot = fixed.Point26_6{
+		X: 100,
+		Y: fixed.I(y),
+	}
+	drawer_boring.DrawString(title)
+
+	// **********************************
+	// Done writing to canvas.
+	// **********************************
+
+	err = os.MkdirAll(*outdir, os.ModePerm)
+	if err != nil {
+		log.Println(err)
+	}
+	Writefile(*outdir+"/"+basename+".png", rgba)
 }
