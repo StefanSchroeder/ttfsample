@@ -77,7 +77,6 @@ var freesansbold []byte
 
 var (
 	boringfont = flag.String("boringfont", "FreeSansBold.ttf", "The path to the boring font")
-	verbose    = flag.Bool("verbose", false, "Print more info")
 	dpi        = flag.Float64("dpi", 72, "screen resolution in Dots Per Inch")
 	fontfile   = flag.String("fontfile", "", "filename of the ttf/otf font")
 	hinting    = flag.String("hinting", "none", "none | full")
