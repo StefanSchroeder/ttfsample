@@ -1,7 +1,6 @@
 // Copyright (c) 2014 Stefan Schroeder, NY, 2014-03-10
 //
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file
+// The license that can be found in the LICENSE file
 
 package main
 
@@ -16,4 +15,10 @@ func Test_Example00(t *testing.T) {
 	strArr := []string{"Abc", "Xyz", "Mno"}
 	outdir = &test_outdir
 	Printjabber("fonts/FreeSansBold.ttf", strArr)
+}
+
+func Test_Example01(t *testing.T) {
+	strArr := []string{"Abc", "Xyz", "Mno"}
+	outdir = &test_outdir
+	Printjabber("fonts/FreeSerifBold.otf", strArr)
 }

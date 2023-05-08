@@ -12,9 +12,9 @@ with a sample of the font.
 For the License see LICENSE.
 
 The program comes with a GNU Free Sans and Serif Bold True Type font which 
-is under GNU Free Font license.
+are under the GNU Free Font license.
 
-https://www.gnu.org/software/freefont/license.html
+	https://www.gnu.org/software/freefont/license.html
 
 There are a couple of options, primary being, that you can supply the text to be
 printed as an argument. But there is also a sensible default (see image).
@@ -23,10 +23,7 @@ When run with the font Arial Narrow, the result will look like this:
 
 ![Sample](https://raw.githubusercontent.com/StefanSchroeder/ttfsample/master/sample/sample.png)
 
-This will create an image file in the png/ directory which will 
-be created if it does not exist.
-
-The name of the font will always be included printed with a
+The name of the font will always be included, printed with a
 boring font, by default GNU FreeSansBold, that is always
 readable even if the font has only symbols.
 
