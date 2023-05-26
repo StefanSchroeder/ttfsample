@@ -2,7 +2,7 @@
 Take a TTF or OTF font file and write a PNG image
 that contains a sample of that font.
 
-The license that can be found in the LICENSE file
+SPDX: MIT
 
 Written by Stefan Schröder. 2019, 2023
 */
@@ -23,11 +23,13 @@ import (
 	"image/color"
 	"image/draw"
 	"image/png"
+	"io/fs"
 	"io/ioutil"
 	"log"
 	"math"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 const (
@@ -83,19 +85,48 @@ var (
 	outdir     = flag.String("outdir", "png", "Output directory")
 	size       = flag.Float64("size", 100, "font size in points")
 	spacing    = flag.Float64("spacing", 1.5, "line spacing (e.g. 2 means double spaced)")
+	walk       = flag.String("walk", "", "recursively look for fonts.")
 )
+
+func walkDirectories(s string, sampleText []string) {
+	if fi, err := os.Stat(s); err == nil {
+		switch {
+		case fi.IsDir():
+			err = filepath.Walk(*walk, func(path string, info fs.FileInfo, err error) error {
+				if err != nil {
+					fmt.Printf("Error accessing path %q: %v\n", path, err)
+					return err
+				}
+				if strings.HasSuffix(path, ".ttf") || strings.HasSuffix(path, ".otf") {
+					Printjabber(path, sampleText)
+				}
+				return nil
+			})
+		default:
+			log.Printf("Walk arg is not a directory.")
+		}
+	} else {
+		log.Printf("Walk arg is not a directory.")
+	}
+}
 
 func main() {
 	flag.Parse()
+
+	wantedText := defaultJabberText
+	if flag.NArg() != 0 {
+		wantedText = flag.Args()
+	}
+	if *walk != "" {
+		walkDirectories(*walk, wantedText)
+		return
+	}
+
 	if _, err := os.Stat(*fontfile); err != nil {
 		log.Printf("Missing file.\n")
 		return
 	}
-	if flag.NArg() == 0 {
-		Printjabber(*fontfile, defaultJabberText)
-	} else {
-		Printjabber(*fontfile, flag.Args())
-	}
+	Printjabber(*fontfile, wantedText)
 }
 
 func Writefile(outputName string, i *image.RGBA) {
