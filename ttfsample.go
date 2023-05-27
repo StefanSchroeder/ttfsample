@@ -129,6 +129,7 @@ func main() {
 	Printjabber(*fontfile, wantedText)
 }
 
+// Writefile writes the png file to disk.
 func Writefile(outputName string, i *image.RGBA) {
 	outFile, err := os.Create(outputName)
 	if err != nil {
@@ -150,6 +151,7 @@ func Writefile(outputName string, i *image.RGBA) {
 	}
 }
 
+// Printjabber prints the string to an Image.
 func Printjabber(ffile string, textToJabber []string) {
 	// Draw the background and the guidelines.
 	fg := image.Black
@@ -236,25 +238,25 @@ func Printjabber(ffile string, textToJabber []string) {
 		log.Println(err)
 		return
 	}
-	boring_face := truetype.NewFace(fBoringFont, &truetype.Options{
+	boringFace := truetype.NewFace(fBoringFont, &truetype.Options{
 		Size:    fontsize,
 		DPI:     *dpi,
 		Hinting: h,
 	})
 
 	// Draw the title in the boring font
-	drawer_boring := &font.Drawer{
+	drawerBoring := &font.Drawer{
 		Dst:  rgba,
 		Src:  fg,
-		Face: boring_face,
+		Face: boringFace,
 	}
 
 	y = 10 + int(math.Ceil(fontsize**dpi/72))
-	drawer_boring.Dot = fixed.Point26_6{
+	drawerBoring.Dot = fixed.Point266{
 		X: 100,
 		Y: fixed.I(y),
 	}
-	drawer_boring.DrawString(title)
+	drawerBoring.DrawString(title)
 
 	// **********************************
 	// Done writing to canvas.

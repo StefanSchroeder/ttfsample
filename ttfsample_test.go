@@ -9,16 +9,16 @@ import (
 	"testing"
 )
 
-var test_outdir = "test-output" + string(os.PathSeparator)
+var testOutdir = "test-output" + string(os.PathSeparator)
 
 func Test_Example00(t *testing.T) {
 	strArr := []string{"Abc", "Xyz", "Mno"}
-	outdir = &test_outdir
+	outdir = &testOutdir
 	Printjabber("fonts/FreeSansBold.ttf", strArr)
 }
 
 func Test_Example01(t *testing.T) {
 	strArr := []string{"Abc", "Xyz", "Mno"}
-	outdir = &test_outdir
+	outdir = &testOutdir
 	Printjabber("fonts/FreeSerifBold.otf", strArr)
 }
