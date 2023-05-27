@@ -2,6 +2,7 @@ PROJECT_NAME := "ttfsample"
 PKG := "github.com/StefanSchroeder/$(PROJECT_NAME)"
 PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/)
 GO_FILES := $(shell find . -name '*.go' | grep -v /vendor/ | grep -v _test.go)
+GOLINT := $(shell go env GOPATH)/bin/golint
  
 .PHONY: all dep lint vet test test-coverage build clean
  
@@ -14,7 +15,7 @@ vet: ## Run go vet
 	@go vet ${PKG_LIST}
 
 lint: ## Lint Golang files
-	@golint -set_exit_status ${PKG_LIST}
+	@${GOLINT} -set_exit_status ${PKG_LIST}
 
 test: ## Run unittests
 	@go test -short ${PKG_LIST}
