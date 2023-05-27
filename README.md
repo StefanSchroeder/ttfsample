@@ -58,7 +58,7 @@ Set *hinting* to *none* to disable hinting. Default is *full*.
 
 Default is 72. Set dots per inch.
 
-	-outdir
+	-outdir STRING
 
 The output directory where the image will be stored.
 
@@ -74,6 +74,11 @@ must be a TTF font.
 	-spacing FLOAT
 
 Defaults to 1.5. Distance between two lines. 
+
+	- walk PATH
+
+Recursively search the directory tree for fonts to print
+starting from PATH and not following symlinks.
 
 # Testing
 
