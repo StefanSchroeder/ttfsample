@@ -252,7 +252,7 @@ func Printjabber(ffile string, textToJabber []string) {
 	}
 
 	y = 10 + int(math.Ceil(fontsize**dpi/72))
-	drawerBoring.Dot = fixed.Point26{
+	drawerBoring.Dot = fixed.Point26_6{
 		X: 100,
 		Y: fixed.I(y),
 	}
