@@ -48,7 +48,8 @@ will do the trick if your Go development environment is setup properly.
 	-fontfile path/to/font.ttf
 
 This is a mandatory option. Provide the path to the font, TTF or
-OTF. You can only process one font.
+OTF. You can only process one font unless using the *-walk*
+option.
 
 	-hinting <none|full>
 
