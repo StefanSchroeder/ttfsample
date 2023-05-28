@@ -78,14 +78,13 @@ var defaultJabberText = []string{
 var freesansbold []byte
 
 var (
-	boringfont = flag.String("boringfont", "FreeSansBold.ttf", "The path to the boring font")
-	dpi        = flag.Float64("dpi", 72, "screen resolution in Dots Per Inch")
-	fontfile   = flag.String("fontfile", "", "filename of the ttf/otf font")
-	hinting    = flag.String("hinting", "none", "none | full")
-	outdir     = flag.String("outdir", "png", "Output directory")
-	size       = flag.Float64("size", 100, "font size in points")
-	spacing    = flag.Float64("spacing", 1.5, "line spacing (e.g. 2 means double spaced)")
-	walk       = flag.String("walk", "", "recursively look for fonts.")
+	dpi      = flag.Float64("dpi", 72, "screen resolution in Dots Per Inch")
+	fontfile = flag.String("fontfile", "", "filename of the ttf/otf font")
+	hinting  = flag.String("hinting", "none", "none | full")
+	outdir   = flag.String("outdir", "png", "Output directory")
+	size     = flag.Float64("size", 100, "font size in points")
+	spacing  = flag.Float64("spacing", 1.5, "line spacing (e.g. 2 means double spaced)")
+	walk     = flag.String("walk", "", "recursively look for fonts.")
 )
 
 func walkDirectories(s string, sampleText []string) {

@@ -24,7 +24,7 @@ When run with the font Arial Narrow, the result will look like this:
 ![Sample](https://raw.githubusercontent.com/StefanSchroeder/ttfsample/master/sample/sample.png)
 
 The name of the font will always be included, printed with a
-boring font, by default GNU FreeSansBold, that is always
+boring font, GNU FreeSansBold, that is always
 readable even if the font has only symbols.
 
 Author: Stefan Schröder, 2019, 2023
@@ -66,11 +66,6 @@ The output directory where the image will be stored.
 	-size INTEGER
 
 Font size in points. Default is 100. Use responsibly.
-
-	-boringfont path/to/font
-
-The font that is used to print the title of the font. This
-must be a TTF font.
 
 	-spacing FLOAT
 
