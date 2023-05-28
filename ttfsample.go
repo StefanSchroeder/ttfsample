@@ -33,6 +33,7 @@ import (
 )
 
 const (
+	version = "0.3.0"
 	imgW = 2000
 	imgH = 800
 )
@@ -112,6 +113,7 @@ func walkDirectories(s string, sampleText []string) {
 
 func main() {
 	flag.Parse()
+	log.Printf("This is ttfsample %v\n", version)
 
 	wantedText := defaultJabberText
 	if flag.NArg() != 0 {
@@ -123,7 +125,7 @@ func main() {
 	}
 
 	if _, err := os.Stat(*fontfile); err != nil {
-		log.Printf("Missing file.\n")
+		log.Printf("Missing file. Use -fontfile option\n")
 		return
 	}
 	Printjabber(*fontfile, wantedText)
