@@ -1,7 +1,7 @@
 [![GoDoc](https://godoc.org/github.com/StefanSchroeder/ttfsample?status.png)](https://godoc.org/github.com/StefanSchroeder/ttfsample)
 [![Go Report Card](https://goreportcard.com/badge/github.com/StefanSchroeder/ttfsample)](https://goreportcard.com/report/github.com/StefanSchroeder/ttfsample)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![Github-Action](https://github.com/StefanSchroeder/ttfsample/actions/workflows/go.yaml/badge.svg)
+[![GH Action Status](https://github.com/StefanSchroeder/ttfsample/workflows/go.yaml/badge.svg)](https://github.com/StefanSchroeder/ttfsample/actions)
 
 # ttfsample
 
