@@ -157,7 +157,7 @@ func Printjabber(ffile string, textToJabber []string) {
 	ruler := color.RGBA{0xdd, 0xdd, 0xdd, 0xff}
 
 	rgba := image.NewRGBA(image.Rect(0, 0, imgW, imgH))
-	draw.Draw(rgba, rgba.Bounds(), image.White, image.ZP, draw.Src)
+	draw.Draw(rgba, rgba.Bounds(), image.White, image.Point{}, draw.Src)
 	for i := 0; i < 200; i++ {
 		rgba.Set(10, 10+i, ruler)
 		rgba.Set(10+i, 10, ruler)
