@@ -101,6 +101,7 @@ func walkDirectories(s string, sampleText []string) {
 				}
 				return nil
 			})
+			_ = err
 		default:
 			log.Printf("Walk arg is not a directory.")
 		}
@@ -117,7 +118,7 @@ func main() {
 		wantedText = flag.Args()
 	}
 	if *walk != "" {
-		_ = walkDirectories(*walk, wantedText)
+		walkDirectories(*walk, wantedText)
 		return
 	}
 
