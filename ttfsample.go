@@ -117,7 +117,7 @@ func main() {
 		wantedText = flag.Args()
 	}
 	if *walk != "" {
-		walkDirectories(*walk, wantedText)
+		_ = walkDirectories(*walk, wantedText)
 		return
 	}
 
