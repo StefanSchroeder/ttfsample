@@ -2,6 +2,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/StefanSchroeder/ttfsample)](https://goreportcard.com/report/github.com/StefanSchroeder/ttfsample)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GH Action Status](https://github.com/StefanSchroeder/ttfsample/workflows/go.yaml/badge.svg)](https://github.com/StefanSchroeder/ttfsample/actions)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/StefanSchroeder/ttfsample/badge)](https://scorecard.dev/viewer/?uri=github.com/StefanSchroeder/ttfsample)
 
 # ttfsample
 
