@@ -7,7 +7,7 @@
 A
 [![Build Status](https://github.com/StefanSchroeder/ttfsample/workflows/Build/badge.svg)](https://github.com/jmerle/inkdrop-graphviz/actions/workflows/build.yml)
 B
-[![Build Status](https://github.com/RPGillespie6/fastcov/workflows/build/badge.svg)](https://github.com/RPGillespie6/fastcov/actions/workflows/build.yaml)
+[![Build Status](https://github.com/StefanSchroeder/ttfsample/workflows/build/badge.svg)](https://github.com/StefanSchroeder/ttfsample/actions/workflows/build.yaml)
 C
 
 # ttfsample
