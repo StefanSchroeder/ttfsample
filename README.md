@@ -4,6 +4,12 @@
 [![GH Action Status](https://github.com/StefanSchroeder/ttfsample/workflows/go.yaml/badge.svg)](https://github.com/StefanSchroeder/ttfsample/actions)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/StefanSchroeder/ttfsample/badge)](https://scorecard.dev/viewer/?uri=github.com/StefanSchroeder/ttfsample)
 
+A
+[![Build Status](https://github.com/StefanSchroeder/ttfsample/workflows/Build/badge.svg)](https://github.com/jmerle/inkdrop-graphviz/actions/workflows/build.yml)
+B
+[![Build Status](https://github.com/RPGillespie6/fastcov/workflows/build/badge.svg)](https://github.com/RPGillespie6/fastcov/actions/workflows/build.yaml)
+C
+
 # ttfsample
 
 Creates a sample image of a Truetype TTF font or Opentype OTF font.
