@@ -1,14 +1,8 @@
 [![GoDoc](https://godoc.org/github.com/StefanSchroeder/ttfsample?status.png)](https://godoc.org/github.com/StefanSchroeder/ttfsample)
 [![Go Report Card](https://goreportcard.com/badge/github.com/StefanSchroeder/ttfsample)](https://goreportcard.com/report/github.com/StefanSchroeder/ttfsample)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GH Action Status](https://github.com/StefanSchroeder/ttfsample/workflows/go.yaml/badge.svg)](https://github.com/StefanSchroeder/ttfsample/actions)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/StefanSchroeder/ttfsample/badge)](https://scorecard.dev/viewer/?uri=github.com/StefanSchroeder/ttfsample)
-
-A
-[![Build Status](https://github.com/StefanSchroeder/ttfsample/workflows/Build/badge.svg)](https://github.com/jmerle/inkdrop-graphviz/actions/workflows/build.yml)
-B
-[![Build Status](https://github.com/StefanSchroeder/ttfsample/workflows/build/badge.svg)](https://github.com/StefanSchroeder/ttfsample/.github/workflows/go.ymll)
-C
+[![Go Build](https://github.com/StefanSchroeder/ttfsample/actions/workflows/go.yml/badge.svg)](https://github.com/StefanSchroeder/ttfsample/actions/workflows/go.yml)
 
 # ttfsample
 
