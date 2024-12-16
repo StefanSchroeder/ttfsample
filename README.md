@@ -3,6 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/StefanSchroeder/ttfsample/badge)](https://scorecard.dev/viewer/?uri=github.com/StefanSchroeder/ttfsample)
 [![Go Build](https://github.com/StefanSchroeder/ttfsample/actions/workflows/go.yml/badge.svg)](https://github.com/StefanSchroeder/ttfsample/actions/workflows/go.yml)
+[![codecov](https://codecov.io/github/StefanSchroeder/ttfsample/branch/master/graph/badge.svg?token=SIRJ6HIFJV)](https://codecov.io/github/StefanSchroeder/ttfsample)
 
 # ttfsample
 
