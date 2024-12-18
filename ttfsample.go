@@ -33,9 +33,9 @@ import (
 )
 
 const (
-	version = "0.3.0"
-	imgW = 2000
-	imgH = 800
+	version = "0.4.0"
+	imgW    = 2000
+	imgH    = 800
 )
 
 // https://www.microsoft.com/typography/otspec/name.htm
@@ -85,6 +85,7 @@ var (
 	outdir   = flag.String("outdir", "png", "Output directory")
 	size     = flag.Float64("size", 100, "font size in points")
 	spacing  = flag.Float64("spacing", 1.5, "line spacing (e.g. 2 means double spaced)")
+	wanted   = flag.String("wanted", "", "text to be printed")
 	walk     = flag.String("walk", "", "recursively look for fonts.")
 )
 
@@ -116,19 +117,26 @@ func main() {
 	log.Printf("This is ttfsample %v\n", version)
 
 	wantedText := defaultJabberText
-	if flag.NArg() != 0 {
-		wantedText = flag.Args()
+	if len(*wanted) > 0 {
+		wantedText = strings.Split(*wanted, "\\n")
 	}
+
 	if *walk != "" {
 		walkDirectories(*walk, wantedText)
 		return
 	}
 
-	if _, err := os.Stat(*fontfile); err != nil {
-		log.Printf("Missing file. Use -fontfile option\n")
+	if len(os.Args) < 2 {
+		log.Printf("Missing arguments. Provide some font filenames.\n")
 		return
 	}
-	Printjabber(*fontfile, wantedText)
+
+	for _, fn := range os.Args[1:] {
+		if _, err := os.Stat(fn); err != nil {
+			continue
+		}
+		Printjabber(fn, wantedText)
+	}
 }
 
 // Writefile writes the png file to disk.
@@ -268,5 +276,8 @@ func Printjabber(ffile string, textToJabber []string) {
 	if err != nil {
 		log.Println(err)
 	}
-	Writefile(*outdir+"/"+basename+".png", rgba)
+
+	outputbasename := basename + ".png"
+	outputfilename := filepath.Join(*outdir, outputbasename)
+	Writefile(outputfilename, rgba)
 }

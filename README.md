@@ -7,17 +7,12 @@
 
 # ttfsample
 
-Creates a sample image of a Truetype TTF font or Opentype OTF font.
+*ttfsample* is a small utility to create a sample image of a Truetype TTF font or Opentype OTF font.
 
-ttfsample will take a font file as an input and create a PNG-image 
-with a sample of the font. 
-
-For the License see LICENSE.
+For the License see [LICENSE](LICENSE)
 
 The program comes with a GNU Free Sans and Serif Bold True Type font which 
-are under the GNU Free Font license.
-
-	https://www.gnu.org/software/freefont/license.html
+are under the [GNU Free Font license](https://www.gnu.org/software/freefont/license.html).
 
 There are a couple of options, primary being, that you can supply the text to be
 printed as an argument. But there is also a sensible default (see image).
@@ -30,13 +25,19 @@ The name of the font will always be included, printed with a
 boring font, GNU FreeSansBold, that is always
 readable even if the font has only symbols.
 
-Author: Stefan Schröder, 2019, 2023
+Author: Stefan Schröder, 2019 - 2024
+
+# Changelog
+
+0.4.0: we have changed the options. Now the font files are to
+be used as parameters, whereas the desired output string is the
+new option *-wanted*. This feels more natural.
 
 # Install and quickstart
 
 	go install github.com/StefanSchroeder/ttfsample/ttfsample@latest
 
-	ttfsample -fontfile somefont.ttf
+	ttfsample somefont.ttf someotherfont.ttf
 
 will create a PNG image in the newly created directory *png/*.
 
@@ -44,15 +45,22 @@ will create a PNG image in the newly created directory *png/*.
 
 	go build . 
 
-will do the trick if your Go development environment is setup properly.
+will do the trick if your [Go development environment is setup properly](https://go.dev/doc/install).
+
+# Parameters
+
+	ttfsample somefont.ttf someotherfont.ttf
+
+This command will create two sample files, one for each font in
+the *png* directory, which will be created for you.
 
 # Options
 
-	-fontfile path/to/font.ttf
+    -wanted "Hello font"
+    -wanted "First line\nSecond line"
 
-This is a mandatory option. Provide the path to the font, TTF or
-OTF. You can only process one font unless using the *-walk*
-option.
+Print the text _Hello font_ on the canvas instead of the default
+alphabet. You can use *\n* to insert a newline.
 
 	-hinting <none|full>
 
@@ -60,23 +68,23 @@ Set *hinting* to *none* to disable hinting. Default is *full*.
 
 	-dpi INTEGER
 
-Default is 72. Set dots per inch.
+The default value for *dpi* is 72. Set dots per inch.
 
 	-outdir STRING
 
-The output directory where the image will be stored.
+The *outdir* option defines the output directory where the image will be stored.
 
 	-size INTEGER
 
-Font size in points. Default is 100. Use responsibly.
+*-size* sets the font size in points. Default is 100. Use responsibly.
 
 	-spacing FLOAT
 
-Defaults to 1.5. Distance between two lines. 
+*-spacing* set the distance between two lines. Defaults to 1.5.
 
 	- walk PATH
 
-Recursively search the directory tree for fonts to print
+The *-walk* option recursively searches the directory tree for fonts to print
 starting from PATH and not following symlinks.
 
 # Testing
