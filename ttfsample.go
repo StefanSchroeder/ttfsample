@@ -67,8 +67,6 @@ var otfNameFields = map[int]string{
 	25: "VariationsPostScriptPrefix",
 }
 
-var title = "Default Title"
-
 var defaultJabberText = []string{
 	"abcdefghijklmnopqrstuvwxyz",
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
@@ -80,7 +78,6 @@ var freesansbold []byte
 
 var (
 	dpi      = flag.Float64("dpi", 72, "screen resolution in Dots Per Inch")
-	fontfile = flag.String("fontfile", "", "filename of the ttf/otf font")
 	hinting  = flag.String("hinting", "none", "none | full")
 	outdir   = flag.String("outdir", "png", "Output directory")
 	size     = flag.Float64("size", 100, "font size in points")
