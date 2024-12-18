@@ -4,7 +4,7 @@ that contains a sample of that font.
 
 SPDX: MIT
 
-Written by Stefan Schröder. 2019, 2023
+Written by Stefan Schröder. 2019, 2023, 2024
 */
 package main
 
@@ -198,10 +198,9 @@ func Printjabber(ffile string, textToJabber []string) {
 	}
 
 	var b sfnt.Buffer
-	fullfontname, _ := fontObject.Name(&b, 4)
-	title = fullfontname
+	title, _ := fontObject.Name(&b, 4) // 4 == Fullname
 
-	// Print the meta-data
+	// Print the first 20 meta-data fields.
 	for i := 0; i < 20; i++ {
 		j, _ := fontObject.Name(&b, sfnt.NameID(i))
 		fmt.Printf("    %v: <%v>\n", otfNameFields[i], j)
