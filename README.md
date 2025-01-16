@@ -95,6 +95,12 @@ will be simply cut off. Setting this value to 0 is illegal.
 The absolute value will taken, so you can use negative numbers, 
 but why would you do that?
 
+    -height INTEGER
+
+The *-height* option defines the height of the generated PNG image.
+The default is 800. If you make the height too small, the image
+will be simply cut off. Setting this value to 0 is illegal.
+
 # Testing
 
 Tested on Windows and Linux.

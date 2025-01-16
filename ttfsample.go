@@ -34,7 +34,6 @@ import (
 
 const (
 	version = "0.4.0"
-	imgH    = 800
 )
 
 // https://www.microsoft.com/typography/otspec/name.htm
@@ -84,9 +83,10 @@ var (
 	wanted   = flag.String("wanted", "", "text to be printed")
 	walk     = flag.String("walk", "", "recursively look for fonts.")
 	width    = flag.Int("width", 2000, "width of the image")
+	height   = flag.Int("height", 800, "height of the image")
 )
 
-func walkDirectories(s string, sampleText []string, width int) {
+func walkDirectories(s string, sampleText []string, width int, height int) {
 	if fi, err := os.Stat(s); err == nil {
 		switch {
 		case fi.IsDir():
@@ -96,7 +96,7 @@ func walkDirectories(s string, sampleText []string, width int) {
 					return err
 				}
 				if strings.HasSuffix(path, ".ttf") || strings.HasSuffix(path, ".otf") {
-					Printjabber(path, sampleText, width)
+					Printjabber(path, sampleText, width, height)
 				}
 				return nil
 			})
@@ -119,7 +119,7 @@ func main() {
 	}
 
 	if *walk != "" {
-		walkDirectories(*walk, wantedText, *width)
+		walkDirectories(*walk, wantedText, *width, *height)
 		return
 	}
 
@@ -132,7 +132,7 @@ func main() {
 		if _, err := os.Stat(fn); err != nil {
 			continue
 		}
-		Printjabber(fn, wantedText, *width)
+		Printjabber(fn, wantedText, *width, *height)
 	}
 }
 
@@ -159,12 +159,12 @@ func Writefile(outputName string, i *image.RGBA) {
 }
 
 // Printjabber prints the string to an Image.
-func Printjabber(ffile string, textToJabber []string, imagewidth int) {
+func Printjabber(ffile string, textToJabber []string, imagewidth int, imageheight int) {
 	// Draw the background and the guidelines.
 	fg := image.Black
 	ruler := color.RGBA{0xdd, 0xdd, 0xdd, 0xff}
 
-	rgba := image.NewRGBA(image.Rect(0, 0, imagewidth, imgH))
+	rgba := image.NewRGBA(image.Rect(0, 0, imagewidth, imageheight))
 	draw.Draw(rgba, rgba.Bounds(), image.White, image.Point{}, draw.Src)
 	for i := 0; i < 200; i++ {
 		rgba.Set(10, 10+i, ruler)
