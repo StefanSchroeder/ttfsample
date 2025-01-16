@@ -34,7 +34,6 @@ import (
 
 const (
 	version = "0.4.0"
-	imgW    = 2000
 	imgH    = 800
 )
 
@@ -84,9 +83,10 @@ var (
 	spacing  = flag.Float64("spacing", 1.5, "line spacing (e.g. 2 means double spaced)")
 	wanted   = flag.String("wanted", "", "text to be printed")
 	walk     = flag.String("walk", "", "recursively look for fonts.")
+	width    = flag.Int("width", 2000, "width of the image")
 )
 
-func walkDirectories(s string, sampleText []string) {
+func walkDirectories(s string, sampleText []string, width int) {
 	if fi, err := os.Stat(s); err == nil {
 		switch {
 		case fi.IsDir():
@@ -96,7 +96,7 @@ func walkDirectories(s string, sampleText []string) {
 					return err
 				}
 				if strings.HasSuffix(path, ".ttf") || strings.HasSuffix(path, ".otf") {
-					Printjabber(path, sampleText)
+					Printjabber(path, sampleText, width)
 				}
 				return nil
 			})
@@ -119,7 +119,7 @@ func main() {
 	}
 
 	if *walk != "" {
-		walkDirectories(*walk, wantedText)
+		walkDirectories(*walk, wantedText, *width)
 		return
 	}
 
@@ -132,7 +132,7 @@ func main() {
 		if _, err := os.Stat(fn); err != nil {
 			continue
 		}
-		Printjabber(fn, wantedText)
+		Printjabber(fn, wantedText, *width)
 	}
 }
 
@@ -159,12 +159,12 @@ func Writefile(outputName string, i *image.RGBA) {
 }
 
 // Printjabber prints the string to an Image.
-func Printjabber(ffile string, textToJabber []string) {
+func Printjabber(ffile string, textToJabber []string, imagewidth int) {
 	// Draw the background and the guidelines.
 	fg := image.Black
 	ruler := color.RGBA{0xdd, 0xdd, 0xdd, 0xff}
 
-	rgba := image.NewRGBA(image.Rect(0, 0, imgW, imgH))
+	rgba := image.NewRGBA(image.Rect(0, 0, imagewidth, imgH))
 	draw.Draw(rgba, rgba.Bounds(), image.White, image.Point{}, draw.Src)
 	for i := 0; i < 200; i++ {
 		rgba.Set(10, 10+i, ruler)
@@ -222,7 +222,7 @@ func Printjabber(ffile string, textToJabber []string) {
 	dy := int(math.Ceil(fontsize * *spacing * *dpi / 72))
 	y += dy
 	d.Dot = fixed.Point26_6{
-		X: (fixed.I(imgW) - d.MeasureString(title)) / 2,
+		X: (fixed.I(imagewidth) - d.MeasureString(title)) / 2,
 		Y: fixed.I(y),
 	}
 

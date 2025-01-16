@@ -14,11 +14,11 @@ var testOutdir = "test-output" + string(os.PathSeparator)
 func Test_Example00(t *testing.T) {
 	strArr := []string{"Abc", "Xyz", "Mno"}
 	outdir = &testOutdir
-	Printjabber("fonts/FreeSansBold.ttf", strArr)
+	Printjabber("fonts/FreeSansBold.ttf", strArr, 2000)
 }
 
 func Test_Example01(t *testing.T) {
 	strArr := []string{"Abc", "Xyz", "Mno"}
 	outdir = &testOutdir
-	Printjabber("fonts/FreeSerifBold.otf", strArr)
+	Printjabber("fonts/FreeSerifBold.otf", strArr, 2001)
 }

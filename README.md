@@ -82,10 +82,18 @@ The *outdir* option defines the output directory where the image will be stored.
 
 *-spacing* set the distance between two lines. Defaults to 1.5.
 
-	- walk PATH
+	-walk PATH
 
 The *-walk* option recursively searches the directory tree for fonts to print
 starting from PATH and not following symlinks.
+
+    -width INTEGER
+
+The *-width* option defines the width of the generated PNG image.
+The default is 2000. If you make the width too small, the image
+will be simply cut off. Setting this value to 0 is illegal.
+The absolute value will taken, so you can use negative numbers, 
+but why would you do that?
 
 # Testing
 
