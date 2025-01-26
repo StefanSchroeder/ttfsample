@@ -75,15 +75,15 @@ var defaultJabberText = []string{
 var freesansbold []byte
 
 var (
-	dpi      = flag.Float64("dpi", 72, "screen resolution in Dots Per Inch")
-	hinting  = flag.String("hinting", "none", "none | full")
-	outdir   = flag.String("outdir", "png", "Output directory")
-	size     = flag.Float64("size", 100, "font size in points")
-	spacing  = flag.Float64("spacing", 1.5, "line spacing (e.g. 2 means double spaced)")
-	wanted   = flag.String("wanted", "", "text to be printed")
-	walk     = flag.String("walk", "", "recursively look for fonts.")
-	width    = flag.Int("width", 2000, "width of the image")
-	height   = flag.Int("height", 800, "height of the image")
+	dpi     = flag.Float64("dpi", 72, "screen resolution in Dots Per Inch")
+	hinting = flag.String("hinting", "none", "none | full")
+	outdir  = flag.String("outdir", "png", "Output directory")
+	size    = flag.Float64("size", 100, "font size in points")
+	spacing = flag.Float64("spacing", 1.5, "line spacing (e.g. 2 means double spaced)")
+	wanted  = flag.String("wanted", "", "text to be printed")
+	walk    = flag.String("walk", "", "recursively look for fonts.")
+	width   = flag.Int("width", 2000, "width of the image")
+	height  = flag.Int("height", 800, "height of the image")
 )
 
 func walkDirectories(s string, sampleText []string, width int, height int) {
@@ -225,6 +225,7 @@ func Printjabber(ffile string, textToJabber []string, imagewidth int, imageheigh
 		X: (fixed.I(imagewidth) - d.MeasureString(title)) / 2,
 		Y: fixed.I(y),
 	}
+	fmt.Printf("MeasureString %s: %v\n", title, d.MeasureString(title))
 
 	// Draw name of font using that font
 	d.DrawString(title)
@@ -232,6 +233,7 @@ func Printjabber(ffile string, textToJabber []string, imagewidth int, imageheigh
 	for _, s := range textToJabber {
 		d.Dot = fixed.P(10, y)
 		d.DrawString(s)
+		fmt.Printf("MeasureString %v: %v\n", s, d.MeasureString(s))
 		y += dy
 	}
 
