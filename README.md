@@ -35,9 +35,11 @@ new option *-wanted*. This feels more natural.
 
 # Install and quickstart
 
-	go install github.com/StefanSchroeder/ttfsample/ttfsample@latest
+	export GOBIN=~/bin
 
-	ttfsample somefont.ttf someotherfont.ttf
+	go install github.com/StefanSchroeder/ttfsample@latest
+
+	./bin/ttfsample somefont.ttf someotherfont.ttf
 
 will create a PNG image in the newly created directory *png/*.
 
